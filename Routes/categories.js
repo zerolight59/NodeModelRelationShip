@@ -45,7 +45,7 @@ router.put('/api/categories/:id',async (req,res)=>{
         return res.status(400).send(error.details[0].message)
     }
 
-    const category = await Catagory.findByIdAndUpdate(req.params.id,{name : req.body.id},{new :true})
+    const category = await Catagory.findByIdAndUpdate(req.params.id,{name : req.body.name},{new :true})
     if (!category) {
         return res.status(404).send("the given catagory id  was not found")
     }
@@ -62,13 +62,13 @@ router.delete('/api/categories/:id',async (req,res)=>{
     res.send(category)
 });
 
-// router.get('/api/categories/:id',(req,res)=>{
-//     const category = categories.find(c=>c.id === parseInt(req.params.id));
-//     if (!category) {
-//         return res.status(404).send("the given catagory id  was not found")
-//     }
-//     res.send(category)
-// });
+router.get('/api/categories/:id',async(req,res)=>{
+    const category = await Catagory.findById(req.params.id);
+    if (!category) {
+        return res.status(404).send("the given catagory id  was not found")
+    }
+    res.send(category)
+});
 
 function validateData(catagory) {
     const schema = joi.object({
